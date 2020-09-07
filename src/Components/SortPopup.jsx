@@ -42,12 +42,12 @@ const SortPopup = ({items}) => {
                   />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={toggleVisiblePopup}>{items[activeItem]}</span>
+                <span onClick={toggleVisiblePopup}>{items[activeItem].name}</span>
               </div>
               {visiblePopup && <div className="sort__popup">
                 <ul>
-                  {items && items.map((name, index) => (
-                    <li className={activeItem === index ? 'active' : ''} onClick={()=>{ActiveHandler(index)}} key={index + name}>{name}</li>
+                  {items && items.map((obj, index) => (
+                    <li className={activeItem === index ? 'active' : ''} onClick={()=>{ActiveHandler(index)}} key={index + obj.name}>{obj.name}</li>
                 ))}
                 </ul>
               </div>}
