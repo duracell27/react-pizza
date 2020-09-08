@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Categories = ({ items }) => {
+const Categories = ({ items, onClickItem }) => {
     const [activeItem, setActiveItem] = React.useState(null)
 
     const ActiveHandler = (index) =>{
         setActiveItem(index)
+        onClickItem(index)
     }
 
     return (
