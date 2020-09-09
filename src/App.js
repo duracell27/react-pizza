@@ -11,8 +11,8 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    Axios.get('http://localhost:3000/db.json').then(({ data }) => {
-      dispatch(setPizzas(data.pizzas))
+    Axios.get('http://localhost:3001/pizzas?_sort=price&_order=desc').then(({ data }) => {
+      dispatch(setPizzas(data))
     })
   }, [])
 
