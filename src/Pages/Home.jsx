@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { Categories, SortPopup, PizzaBlock } from '../Components';
-import { setCategory } from '../redux/actions/filters'
+import { Categories, SortPopup, PizzaBlock, PizzaLoadinkBlock } from '../Components';
+import { setCategory, setSortBy } from '../redux/actions/filters'
 import { fetchPizzas } from '../redux/actions/pizzas'
 
 const items = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
@@ -10,9 +10,12 @@ const sortBy=[{ name: 'популярности', type: 'popular' },
                 { name: 'алфавиту', type: 'alphabet' }]
 
 function Home() {
-    const { pizzas } = useSelector(state => {
+    const { pizzas, isLoaded, category, sortByRedux } = useSelector(state => {
         return {
-            pizzas: state.pizzas.items
+            pizzas: state.pizzas.items,
+            isLoaded: state.pizzas.isLoaded,
+            category: state.filters.category,
+            sortByRedux: state.filters.sortBy,
         }
     })
 
@@ -22,27 +25,28 @@ function Home() {
         dispatch(setCategory(index))
     }, [])
 
+    const onSelectSortBy = React.useCallback((name) => {
+        dispatch(setSortBy(name))
+    }, [])
+
     React.useEffect(() => {
         // if(!pizzas.length){}
 
-        
+
         dispatch(fetchPizzas())
-    }, [])
+    }, [category, sortByRedux])
 
     
 
     return (
         <div className="container">
             <div className="content__top">
-                <Categories onClickItem={onSelectItem} items={items} />
-                <SortPopup items={sortBy} />
+                <Categories activeItem={category} onClickItem={onSelectItem} items={items} />
+                <SortPopup activeSortType={sortByRedux} onSelectSortBy={onSelectSortBy} items={sortBy} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-                {pizzas && pizzas.map((pizza) => (
-                    <PizzaBlock key={pizza.id} {...pizza} />
-                ))
-                }
+                {isLoaded ? pizzas.map((pizza) => <PizzaBlock key={pizza.id}  {...pizza}/>) : Array(10).fill(0).map((_, index)=><PizzaLoadinkBlock key={index} />)}
             </div>
         </div>
 

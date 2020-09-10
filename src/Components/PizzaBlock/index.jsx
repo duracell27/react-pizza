@@ -16,8 +16,6 @@ function PizzaBlock({imageUrl, name, price, types, sizes}) {
         setActiveSize(index)
     }
 
-    
-
     return (
         <div className="pizza-block">
             <img
@@ -65,7 +63,7 @@ PizzaBlock.propTypes = {
     "sizes": PropTypes.arrayOf(PropTypes.number).isRequired,
     "price": PropTypes.number.isRequired,
     "category": PropTypes.number.isRequired,
-    "rating": PropTypes.number.isRequired
+    "rating": PropTypes.number.isRequired,
 }
 
 export default PizzaBlock

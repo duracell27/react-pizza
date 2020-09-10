@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SortPopup = React.memo(({items}) => {
+const SortPopup = React.memo(({items, onSelectSortBy, activeSortType}) => {
 
   const [visiblePopup, setVisiblePopup] = React.useState(false)
 
@@ -19,10 +19,9 @@ const SortPopup = React.memo(({items}) => {
       document.body.addEventListener('click', handleOutsideClick)
   },[])
 
-  const [activeItem, setActiveItem] = React.useState(0)
-
-  const ActiveHandler = (index) =>{
-      setActiveItem(index)
+  const onClickHandlers = (name) => {
+    onSelectSortBy(name)
+    toggleVisiblePopup()
   }
 
   return (
@@ -42,12 +41,12 @@ const SortPopup = React.memo(({items}) => {
                 />
               </svg>
               <b>Сортировка по:</b>
-              <span onClick={toggleVisiblePopup}>{items[activeItem].name}</span>
+              <span onClick={toggleVisiblePopup}>{activeSortType}</span>
             </div>
             {visiblePopup && <div className="sort__popup">
               <ul>
                 {items && items.map((obj, index) => (
-                  <li className={activeItem === index ? 'active' : ''} onClick={()=>{ActiveHandler(index)}} key={index + obj.name}>{obj.name}</li>
+                  <li className={activeSortType === obj.name ? 'active' : ''} onClick={()=>onClickHandlers(obj.name)} key={index + obj.name}>{obj.name}</li>
               ))}
               </ul>
             </div>}
