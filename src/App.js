@@ -1,18 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Header } from './Components';
 import { Home, Cart } from './Pages'
 import { Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { fetchPizzas } from './redux/actions/pizzas'
 
 function App() {
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(fetchPizzas())
-  }, [])
-
   return (
     <div className="wrapper">
       <Header />
