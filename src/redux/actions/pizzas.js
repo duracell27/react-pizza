@@ -5,9 +5,14 @@ export const setLoaded = val => ({
     payload: val
 })
 
-export const fetchPizzas = () => (dispatch) => {
+export const fetchPizzas = (category, sortByRedux) => (dispatch) => {
     dispatch(setLoaded(false))
-    Axios.get('http://localhost:3001/pizzas?_sort=price&_order=desc').then(({ data }) => {
+    switch(sortByRedux){
+        case 'популярности': sortByRedux = 'popular'; break;
+        case 'цене': sortByRedux = 'price'; break;
+        case 'алфавиту': sortByRedux = 'name'; break;
+      } 
+    Axios.get(`http://localhost:3001/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortByRedux}&_order=desc`).then(({ data }) => {
         dispatch(setPizzas(data))
     })
 }

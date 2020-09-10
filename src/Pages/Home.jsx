@@ -33,7 +33,7 @@ function Home() {
         // if(!pizzas.length){}
 
 
-        dispatch(fetchPizzas())
+        dispatch(fetchPizzas(category, sortByRedux))
     }, [category, sortByRedux])
 
     
