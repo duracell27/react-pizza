@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Button from '../Button'
 
 
-function PizzaBlock({imageUrl, name, price, types, sizes}) {
+function PizzaBlock({id,imageUrl, name, price, types, sizes, onAddPizza, inCartItems}) {
     const typesNames = ['тонкое','традиционное']
     const sizesNames = [26,30, 40]
     const [activeType, setActiveType] = React.useState(types[0])
@@ -15,6 +15,18 @@ function PizzaBlock({imageUrl, name, price, types, sizes}) {
     const [activeSize, setActiveSize] = React.useState(sizes[0])
     const onSelectSize = (index) => {
         setActiveSize(index)
+    }
+
+    const onAddPizzaHandler = () => {
+      const obj = {
+        id,
+        name,
+        imageUrl,
+        price,
+        size: activeSize,
+        type: typesNames[activeType]
+      }
+      onAddPizza(obj)
     }
 
     return (
@@ -35,7 +47,7 @@ function PizzaBlock({imageUrl, name, price, types, sizes}) {
             </div>
             <div className="pizza-block__bottom">
             <div className="pizza-block__price">{`от ${price} ₽`}</div>
-              <Button className="button--add" outline>
+              <Button onClick={onAddPizzaHandler} className="button--add" outline>
                 <svg
                   width="12"
                   height="12"
@@ -49,7 +61,7 @@ function PizzaBlock({imageUrl, name, price, types, sizes}) {
                   />
                 </svg>
                 <span>Добавить</span>
-                <i>2</i>
+                {inCartItems && <i>{inCartItems}</i>}
               </Button>
             </div>
         </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
 
 const SortPopup = React.memo(({items, onSelectSortBy, activeSortType}) => {
 
