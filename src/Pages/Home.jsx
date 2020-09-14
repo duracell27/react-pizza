@@ -50,7 +50,7 @@ function Home() {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-                {isLoaded ? pizzas.map((pizza) => <PizzaBlock inCartItems={cartItems[pizza.id] && cartItems[pizza.id].length} onAddPizza={addPizza} key={pizza.id}  {...pizza}/>) : Array(10).fill(0).map((_, index)=><PizzaLoadinkBlock key={index} />)}
+                {isLoaded ? pizzas.map((pizza) => <PizzaBlock inCartItems={cartItems[pizza.id] && cartItems[pizza.id].items.length} onAddPizza={addPizza} key={pizza.id}  {...pizza}/>) : Array(10).fill(0).map((_, index)=><PizzaLoadinkBlock key={index} />)}
             </div>
         </div>
 

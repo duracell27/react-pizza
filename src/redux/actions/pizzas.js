@@ -12,7 +12,7 @@ export const fetchPizzas = (category, sortByRedux) => (dispatch) => {
         case 'цене': sortByRedux = 'price'; break;
         case 'алфавиту': sortByRedux = 'name'; break;
       } 
-    Axios.get(`http://localhost:3001/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortByRedux}&_order=desc`).then(({ data }) => {
+    Axios.get(`/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortByRedux}&_order=desc`).then(({ data }) => {
         dispatch(setPizzas(data))
     })
 }
