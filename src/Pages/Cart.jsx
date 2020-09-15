@@ -1,7 +1,7 @@
 import React from 'react'
 import { CartItem, CartEmpty } from '../Components'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearCart, removeCartItem } from '../redux/actions/cart'
+import { clearCart, removeCartItem, onPlus, onMinus } from '../redux/actions/cart'
 import { Link } from 'react-router-dom'
 
 function Cart() {
@@ -12,7 +12,6 @@ function Cart() {
         return items[key].items[0]
     })
 
-    console.log(addedPizzas)
     const dispatch = useDispatch();
     const clearCartHandler = () => {
         if (window.confirm('Ви точно хочете очистити корзину?')) {
@@ -23,6 +22,18 @@ function Cart() {
         if (window.confirm('Ви точно хочете видалити піццу?')) {
             dispatch(removeCartItem(id))
         }
+    }
+
+    const onPlusClick = (id) => {
+        dispatch(onPlus(id))
+    }
+
+    const onMinusClick = (id) => {
+        dispatch(onMinus(id))
+    }
+
+    const onOrder = () => {
+        console.log('ВАШ ЗАКАЗ', items)
     }
 
     return (
@@ -47,7 +58,7 @@ function Cart() {
                     </div>
                 </div>
                 <div className="content__items">
-                    {addedPizzas.map((obj) => <CartItem onClickDel={clearPizzaHandler} id={obj.id} key={obj.name} name={obj.name} imageUrl={obj.imageUrl} size={obj.size} type={obj.type} totalPrice={items[obj.id].totalPrice} totalItems={items[obj.id].items.length} />)}
+                    {addedPizzas.map((obj) => <CartItem onClickDel={clearPizzaHandler} id={obj.id} key={obj.name} name={obj.name} imageUrl={obj.imageUrl} size={obj.size} type={obj.type} totalPrice={items[obj.id].totalPrice} totalItems={items[obj.id].items.length} onPlusClick={onPlusClick} onMinusClick={onMinusClick} />)}
                 </div>
                 <div className="cart__bottom">
                     <div className="cart__bottom-details">
@@ -62,13 +73,13 @@ function Cart() {
 
                             <span>Вернуться назад</span>
                         </Link>
-                        <div className="button pay-btn">
+                        <div onClick={onOrder} className="button pay-btn">
                             <span>Оплатить сейчас</span>
                         </div>
                     </div>
                 </div>
             </div> : <CartEmpty />}
-            
+
         </div>
 
     )
